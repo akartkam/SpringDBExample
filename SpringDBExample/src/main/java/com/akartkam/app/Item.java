@@ -21,6 +21,22 @@ import javax.persistence.OneToMany;
 @Table(name = "ITEM", schema = "MKYONGDB")
 public class Item implements Serializable, Comparable {
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name = "ITEM_ID")

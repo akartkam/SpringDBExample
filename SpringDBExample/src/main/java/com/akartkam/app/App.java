@@ -11,8 +11,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.springframework.dao.annotation.
 
+import org.springframework.jdbc.core.RowMapper;
+//import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 public class App {
 	 
@@ -29,7 +31,7 @@ public class App {
 		PreparedStatement stmt=null;
 		try {
 		conn =ds.getConnection();
-		stmt =conn.prepareStatement("SELECT * FROM MKYONGDB.CE_ITEM");
+		stmt =conn.prepareStatement("SELECT * FROM ITEM");
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()){		
 		System.out.println(rs.getString(2));
@@ -51,19 +53,20 @@ public class App {
 		//Jdbc Template
 		SimpleJdbcTemplate jdbcTemplate = (SimpleJdbcTemplate) appContext.getBean("jdbcTemplate");
 		Item item = jdbcTemplate.queryForObject(
-				"SELECT * FROM MKYONGDB.CE_ITEM IT WHERE IT.CE_ITEM_ID = ?",
-				newParameterizedRowMapper<Item>(){
-				public SpittermapRow(ResultSetrs,introwNum)
+				"SELECT * FROM ITEM IT WHERE IT.ITEM_ID = ?",
+				new RowMapper<Item>(){
+				public Item mapRow(ResultSet rs, int rowNum)
 				throws SQLException{
-				Spitter spitter=newSpitter();
-				spitter.setId(rs.getLong(1));
-				spitter.setUsername(rs.getString(2));
-				spitter.setPassword(rs.getString(3));
-				spitter.setFullName(rs.getString(4));
-				return spitter;
+					Item item = new Item();
+					item.setId (rs.getLong(1));
+					item.setName(rs.getString(2));
+					item.setVersion(rs.getInt(3));
+				return item;
 				}
 				},
-				id
+				1
 				);
+		System.out.println(item);
+		System.out.println(item.getBids());
 	}
 }

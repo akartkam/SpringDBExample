@@ -14,7 +14,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import org.springframework.jdbc.core.RowMapper;
 //import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class App {
 	 
@@ -51,7 +51,7 @@ public class App {
 		}
 		}
 		//Jdbc Template
-		SimpleJdbcTemplate jdbcTemplate = (SimpleJdbcTemplate) appContext.getBean("jdbcTemplate");
+		JdbcTemplate jdbcTemplate = (JdbcTemplate) appContext.getBean("jdbcTemplate");
 		Item item = jdbcTemplate.queryForObject(
 				"SELECT * FROM ITEM IT WHERE IT.ITEM_ID = ?",
 				new RowMapper<Item>(){

@@ -23,15 +23,16 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 		<constructor-arg ref="dataSource" />
 	</bean>
 	
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+  	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.habuma.spitter.domain" />
-		<property name="hibernateProperties">
+    		<property name="packagesToScan" value="com.akartkam.domain" />
+			<property name="hibernateProperties">
 			<props>
 				<prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
 			</props>
-		</property>
-	</bean>	
+		</property> 
+	</bean>
+	
 	
 </beans>
 

@@ -1,5 +1,7 @@
 package com.akartkam.app;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,23 +12,30 @@ import javax.sql.DataSource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
 
+import com.akartkam.domain.Spitter;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import org.springframework.jdbc.core.RowMapper;
 //import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 public class App {
 	 
+	private static final String SPITTER_XML = "./spitter-jaxb.xml";
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws  JAXBException, IOException {
 
 		
 
 		ApplicationContext appContext = new ClassPathXmlApplicationContext("SpringDBExample.xml");
      
 		
-		DataSource ds = (ComboPooledDataSource) appContext.getBean("dataSource");
+		/*DataSource ds = (ComboPooledDataSource) appContext.getBean("dataSource");
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		try {
@@ -67,6 +76,24 @@ public class App {
 				1
 				);
 		System.out.println(item);
-		System.out.println(item.getBids());
+		System.out.println(item.getBids());*/
+		
+		Spitter spitter = new Spitter();
+		spitter.setId(1L);
+		spitter.setEmail("akartkam@gmail.com");
+		spitter.setFullName("akartkam");
+		spitter.setUsername("akartkam");
+		spitter.setPassword("password");
+		
+		JAXBContext context = JAXBContext.newInstance(Spitter.class);
+	    Marshaller m = context.createMarshaller();
+	    m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	    
+	 // Write to System.out
+	    m.marshal(spitter, System.out);
+
+	    // Write to File
+	    m.marshal(spitter, new File(SPITTER_XML));
+	
 	}
 }

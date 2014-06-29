@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>                           
 <beans xmlns="http://www.springframework.org/schema/beans"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">                          
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">                          
         
-<!--"com.mchange.v2.c3p0.ComboPooledDataSource"-->        
+	<!--"com.mchange.v2.c3p0.ComboPooledDataSource"-->   
+	<context:annotation-config />     
+	<context:component-scan base-package="com.akartkam.persistence" />
+
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
                        
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="driverClass" value="org.hsqldb.jdbcDriver" />
+		<!--  <property name="driverClass" value="org.hsqldb.jdbcDriver" />
 		<property name="jdbcUrl" value="jdbc:hsqldb:hsql://localhost" />
 		<property name="user" value="sa" />
-		<property name="password" value="" />
+		<property name="password" value="" />-->
+		<property name="driverClass" value="org.postgresql.Driver"/>
+		<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/testpy"/>
+		<property name="user" value="myUser"/>
+		<property name="password" value="shvabroid1"/>		
 
 		<!-- these are C3P0 properties -->
 		<property name="acquireIncrement" value="1" />
@@ -29,9 +40,13 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 			<property name="hibernateProperties">
 			<props>
 				<prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="format_sql">true</prop>				
 			</props>
 		</property> 
 	</bean>
+	
 	
 	
 </beans>

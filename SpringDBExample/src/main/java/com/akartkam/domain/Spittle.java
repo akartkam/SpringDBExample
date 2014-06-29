@@ -1,11 +1,35 @@
 package com.akartkam.domain;
 
+import static javax.persistence.GenerationType.*;
+import static org.apache.commons.lang3.builder.EqualsBuilder.*;
+import static org.apache.commons.lang3.builder.HashCodeBuilder.*;
+import static org.apache.commons.lang3.builder.ToStringBuilder.*;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Spittle {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
+@Table(name="SPITTLE")
+public class Spittle implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   private Long id;
   private Spitter spitter;
   private String text;
+  
+  @DateTimeFormat(pattern="hh:mma MMM d, YYYY")
   private Date when;
 
   public Spittle() {
@@ -13,6 +37,9 @@ public class Spittle {
     this.spitter.setId((long)1);
   }
   
+  @Id
+  @GeneratedValue(strategy = AUTO)
+  @Column(name="SPITTLE_ID")
   public Long getId() {
     return this.id;
   }
@@ -21,6 +48,9 @@ public class Spittle {
     this.id = id;
   }
   
+  @Column(name="SPITTLETEXT")
+  @NotNull
+  @Size(min=1, max=140)
   public String getText() {
     return this.text;
   }
@@ -29,6 +59,7 @@ public class Spittle {
     this.text = text;
   }
   
+  @Column(name="POSTEDTIME")
   public Date getWhen() {
     return this.when;
   }
@@ -37,11 +68,29 @@ public class Spittle {
     this.when = when;
   }
 
+  @ManyToOne
+  @JoinColumn(name="SPITTER_ID")
   public Spitter getSpitter() {
     return this.spitter;
   }
 
   public void setSpitter(Spitter spitter) {
     this.spitter = spitter;
+  }
+  
+  // plumbing
+  @Override
+  public boolean equals(Object obj) {
+    return reflectionEquals(this, obj);
+  }
+  
+  @Override
+  public int hashCode() {
+    return reflectionHashCode(this);
+  }
+  
+  @Override
+  public String toString() {
+    return reflectionToString(this);
   }
 }

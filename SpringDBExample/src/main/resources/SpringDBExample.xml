@@ -19,8 +19,8 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 		<property name="user" value="sa" />
 		<property name="password" value="" />-->
 		<property name="driverClass" value="org.postgresql.Driver"/>
-		<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/testpy"/>
-		<property name="user" value="myUser"/>
+		<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/test"/>
+		<property name="user" value="myuser"/>
 		<property name="password" value="shvabroid1"/>		
 
 		<!-- these are C3P0 properties -->
@@ -39,11 +39,11 @@ http://www.springframework.org/schema/context/spring-context.xsd">
     		<property name="packagesToScan" value="com.akartkam.domain" />
 			<property name="hibernateProperties">
 			<props>
-				<prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
+				<prop key="dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="show_sql">TRUE</prop>
 				<prop key="format_sql">TRUE</prop>
-				<prop key="org.hibernate.SQL.level">DEBUG</prop>				
+				<prop key="org.hibernate.SQL.level">INFO</prop>				
 			</props>
 		</property> 
 	</bean>

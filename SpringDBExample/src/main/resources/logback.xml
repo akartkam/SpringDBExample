@@ -3,19 +3,18 @@
  
  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-		<Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
-                </Pattern>
+		<Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level %logger{36} - %msg%n </Pattern>
 	</encoder>
  </appender>
  
- <logger name="org.springframework" level="debug" additivity="false">
+ <logger name="org.springframework" level="info" additivity="false">
     <appender-ref ref="STDOUT" />
 </logger>
  
-  <logger name="org.hibernate.type" level="ALL" />
-  <logger name="org.hibernate" level="DEBUG" />
+ <!--   <logger name="org.hibernate.type" level="ALL" /> -->
+  <logger name="org.hibernate" level="INFO" />
  
-  <root level="DEBUG">
+  <root level="INFO">
 	<appender-ref ref="STDOUT" />
   </root>
  

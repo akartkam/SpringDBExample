@@ -1,4 +1,4 @@
-package com.akartkam.app;
+package com.akartkam.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.persistence.Table;
  * @author Christian Bauer
  */
 @Entity
-@Table(name = "BID", schema = "MKYONGDB")
+@Table(name = "BID")
 public class Bid implements Serializable, Comparable {
 	@Id
 	@GeneratedValue
@@ -34,6 +34,17 @@ public class Bid implements Serializable, Comparable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ITEM_ID")
 	private Item item;
+	@ManyToOne//(cascade = CascadeType.ALL)
+	@JoinColumn(name = "USER_ID")
+	private User user;
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Column(name = "CREATE_DATE")
 	private Date created = new Date();
 

@@ -41,8 +41,9 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 			<props>
 				<prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="show_sql">true</prop>
-				<prop key="format_sql">true</prop>				
+				<prop key="show_sql">TRUE</prop>
+				<prop key="format_sql">TRUE</prop>
+				<prop key="org.hibernate.SQL.level">DEBUG</prop>				
 			</props>
 		</property> 
 	</bean>

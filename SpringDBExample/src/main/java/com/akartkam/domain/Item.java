@@ -1,4 +1,4 @@
-package com.akartkam.app;
+package com.akartkam.domain;
 
 
 import java.io.Serializable;
@@ -18,24 +18,8 @@ import javax.persistence.OneToMany;
  * @author Christian Bauer
  */
 @Entity
-@Table(name = "ITEM", schema = "MKYONGDB")
+@Table(name = "ITEM")
 public class Item implements Serializable, Comparable {
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Id
 	@GeneratedValue

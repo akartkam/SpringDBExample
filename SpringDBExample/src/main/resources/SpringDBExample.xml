@@ -10,8 +10,9 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	<!--"com.mchange.v2.c3p0.ComboPooledDataSource"-->   
 	<context:annotation-config />     
 	<context:component-scan base-package="com.akartkam.persistence" />
-
+	<context:component-scan base-package="com.akartkam.app" />
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
+	<!--  <bean class="com.akartkam.app.App"/> -->
                        
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<!--  <property name="driverClass" value="org.hsqldb.jdbcDriver" />
@@ -20,7 +21,7 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 		<property name="password" value="" />-->
 		<property name="driverClass" value="org.postgresql.Driver"/>
 		<property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/test"/>
-		<property name="user" value="myuser"/>
+		<property name="user" value="postgres"/>
 		<property name="password" value="shvabroid1"/>		
 
 		<!-- these are C3P0 properties -->

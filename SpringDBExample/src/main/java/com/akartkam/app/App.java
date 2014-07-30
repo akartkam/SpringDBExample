@@ -9,31 +9,50 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
 
+import com.akartkam.domain.AddressEntity;
 import com.akartkam.domain.Spitter;
+import com.akartkam.domain.User;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import org.springframework.jdbc.core.RowMapper;
 //import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+@Repository
 public class App {
 	 
 	private static final String SPITTER_XML = "./spitter-jaxb.xml";
 	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	
+	public Session currentSession() { // Извлекает текущий
+		return sessionFactory.openSession(); // сеанс из фабрики
+	}
+	
 	public static void main(String[] args) throws  JAXBException, IOException {
 
+	
 		
 
 		ApplicationContext appContext = new ClassPathXmlApplicationContext("SpringDBExample.xml");
      
+		App app = (App) appContext.getBean(App.class);
+		
 		
 		/*DataSource ds = (ComboPooledDataSource) appContext.getBean("dataSource");
 		Connection conn=null;
@@ -76,7 +95,7 @@ public class App {
 				1
 				);
 		System.out.println(item);
-		System.out.println(item.getBids());*/
+		System.out.println(item.getBids());
 		
 		Spitter spitter = new Spitter();
 		spitter.setId(1L);
@@ -93,7 +112,22 @@ public class App {
 	    m.marshal(spitter, System.out);
 
 	    // Write to File
-	    m.marshal(spitter, new File(SPITTER_XML));
+	    m.marshal(spitter, new File(SPITTER_XML));*/
+ 
+		app.currentSession().beginTransaction();
+		
+		AddressEntity addr = new AddressEntity("Street", "123456", "City");
+		
+		
+		User user = new User("username", "password");
+		user.setShippingAddress(addr);
+		addr.setUser(user);
+		app.currentSession().save(user);
+		app.currentSession().save(addr);		
+		
+		app.currentSession().getTransaction().commit();
+		
+		app.currentSession().close();
 	
 	}
 }

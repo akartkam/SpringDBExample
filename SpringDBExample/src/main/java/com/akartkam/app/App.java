@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
@@ -31,18 +32,20 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-@Repository
+import com.akartkam.persistence.SessionFactory1;;
+
+//@Repository
 public class App {
 	 
 	private static final String SPITTER_XML = "./spitter-jaxb.xml";
 	
-	@Autowired
-	private SessionFactory sessionFactory;
+	//@Autowired
+
 	
 	
-	public Session currentSession() { // Извлекает текущий
+	/*public Session currentSession() { // Извлекает текущий
 		return sessionFactory.openSession(); // сеанс из фабрики
-	}
+	}*/
 	
 	public static void main(String[] args) throws  JAXBException, IOException {
 
@@ -52,6 +55,7 @@ public class App {
 		ApplicationContext appContext = new ClassPathXmlApplicationContext("SpringDBExample.xml");
      
 		App app = (App) appContext.getBean(App.class);
+		
 		
 		
 		/*DataSource ds = (ComboPooledDataSource) appContext.getBean("dataSource");
@@ -114,7 +118,10 @@ public class App {
 	    // Write to File
 	    m.marshal(spitter, new File(SPITTER_XML));*/
  
-		app.currentSession().beginTransaction();
+		  
+		
+		Session session = appContext.getBean(SessionFactory1.class).currentSession();
+		Transaction tx = session.beginTransaction();
 		
 		AddressEntity addr = new AddressEntity("Street", "123456", "City");
 		
@@ -122,12 +129,12 @@ public class App {
 		User user = new User("username", "password");
 		user.setShippingAddress(addr);
 		addr.setUser(user);
-		app.currentSession().save(user);
-		app.currentSession().save(addr);		
+		session.save(user);
+		session.save(addr);		
 		
-		app.currentSession().getTransaction().commit();
-		
-		app.currentSession().close();
+        
+        tx.commit();
+        session.close();
 	
 	}
 }

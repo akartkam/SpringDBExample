@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
@@ -16,9 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "ADDRESS_ENT_ID") })
 public class User implements Serializable {
 
 	/**
@@ -26,7 +28,7 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "USERS_ID")
 	private Long id = null;
     private int version = 1;
@@ -45,8 +47,9 @@ public class User implements Serializable {
         inverseJoinColumns={@JoinColumn(name="BID_ID")})
     private List<Bid> bids = new ArrayList<Bid>();
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    //@PrimaryKeyJoinColumn
+    @JoinColumn(name="ADDRESS_ENT_ID")//, unique=true, updatable=false)
     private AddressEntity shippingAddress;
 
     public AddressEntity getShippingAddress() {

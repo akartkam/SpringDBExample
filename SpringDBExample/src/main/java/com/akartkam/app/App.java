@@ -128,11 +128,15 @@ public class App {
 		
 		User user = new User("username", "password");
 		user.setShippingAddress(addr);
-		addr.setUser(user);
+		//addr.setUser(user);
 		session.save(user);
-		session.save(addr);		
+		session.save(addr);	
 		
-        
+		/*User user1 = new User("username1", "password1");
+		//addr.setUser(user1);
+		user1.setShippingAddress(addr);
+		session.save(user1);*/
+		
         tx.commit();
         session.close();
 	

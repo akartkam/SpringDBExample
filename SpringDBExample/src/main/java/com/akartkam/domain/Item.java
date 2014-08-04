@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
 
@@ -23,6 +24,7 @@ public class Item implements Serializable, Comparable {
 
 	@Id
 	@GeneratedValue
+	//@PrimaryKeyJoinColumn
 	@Column(name = "ITEM_ID")
 	private Long id = null;
     private int version = 1;

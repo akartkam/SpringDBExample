@@ -34,7 +34,7 @@ public class Bid implements Serializable, Comparable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ITEM_ID")
 	private Item item;
-	@ManyToOne//(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 	public User getUser() {

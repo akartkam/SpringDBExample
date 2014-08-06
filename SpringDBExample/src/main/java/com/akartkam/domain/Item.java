@@ -4,7 +4,8 @@ package com.akartkam.domain;
 import java.io.Serializable;
 import java.util.*;
 
-import javax.persistence.CascadeType;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,6 @@ public class Item implements Serializable, Comparable {
 
 	@Id
 	@GeneratedValue
-	//@PrimaryKeyJoinColumn
 	@Column(name = "ITEM_ID")
 	private Long id = null;
     private int version = 1;
@@ -32,7 +32,8 @@ public class Item implements Serializable, Comparable {
     @Column(name = "NAME")
     private String name;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    @OneToMany(mappedBy = "item")
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
     private List<Bid> bids = new ArrayList<Bid>();
 
 

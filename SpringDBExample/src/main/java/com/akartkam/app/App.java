@@ -128,7 +128,7 @@ public class App {
 		
 		User user = new User("username", "password");
 		user.setShippingAddress(addr);
-		//addr.setUser(user);
+		addr.setUser(user);
 		session.save(user);
 		session.save(addr);	
 		

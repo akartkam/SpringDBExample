@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "ADDRESS_ENT_ID") })
+@Table(name = "USERS")//, uniqueConstraints = {@UniqueConstraint(columnNames = "ADDRESS_ENT_ID") })
 public class User implements Serializable {
 
 	/**
@@ -47,9 +47,9 @@ public class User implements Serializable {
         inverseJoinColumns={@JoinColumn(name="BID_ID")})
     private List<Bid> bids = new ArrayList<Bid>();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     //@PrimaryKeyJoinColumn
-    @JoinColumn(name="ADDRESS_ENT_ID")//, unique=true, updatable=false)
+    //@JoinColumn(name="ADDRESS_ENT_ID")//, unique=true, updatable=false)
     private AddressEntity shippingAddress;
 
     public AddressEntity getShippingAddress() {

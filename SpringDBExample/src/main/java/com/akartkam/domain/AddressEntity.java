@@ -28,17 +28,18 @@ public class AddressEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id 
-	@GeneratedValue
-	//@GeneratedValue(generator = "myForeignGenerator")
-	//@org.hibernate.annotations.GenericGenerator(
-	//name = "myForeignGenerator",
-	//strategy = "foreign",
-	//parameters = @Parameter(name = "property", value = "user")
-	//)
+	//@GeneratedValue
+	@GeneratedValue(generator = "myForeignGenerator")
+	@org.hibernate.annotations.GenericGenerator(
+	name = "myForeignGenerator",
+	strategy = "foreign",
+	parameters = @Parameter(name = "property", value = "user")
+	)
 	@Column(name = "ADDRESS_ENT_ID")
 	private Long id;
 	
-	@OneToOne(mappedBy = "shippingAddress", cascade = CascadeType.ALL)
+	@OneToOne//(mappedBy = "shippingAddress", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private User user;
 	
 	

@@ -21,7 +21,7 @@ public class SessionFactory1 {
 	}
 	
 	public Session currentSession() { // Извлекает текущий
-		return sessionFactory.openSession(); // сеанс из фабрики
+		return sessionFactory.getCurrentSession(); // сеанс из фабрики
 	}
 
 }

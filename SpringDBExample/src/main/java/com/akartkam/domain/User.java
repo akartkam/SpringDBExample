@@ -47,9 +47,9 @@ public class User implements Serializable {
         inverseJoinColumns={@JoinColumn(name="BID_ID")})
     private List<Bid> bids = new ArrayList<Bid>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(/*mappedBy = "user",*/ cascade = CascadeType.ALL)
     //@JoinColumn(name="ADDRESS_ENT_ID")//, unique=true, updatable=false)
+    @PrimaryKeyJoinColumn
     private AddressEntity shippingAddress;
 
     public AddressEntity getShippingAddress() {

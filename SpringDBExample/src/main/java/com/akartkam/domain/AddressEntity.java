@@ -28,7 +28,6 @@ public class AddressEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id 
-	//@GeneratedValue
 	@GeneratedValue(generator = "myForeignGenerator")
 	@org.hibernate.annotations.GenericGenerator(
 	name = "myForeignGenerator",
@@ -38,8 +37,10 @@ public class AddressEntity implements Serializable {
 	@Column(name = "ADDRESS_ENT_ID")
 	private Long id;
 	
-	@OneToOne//(mappedBy = "shippingAddress", cascade = CascadeType.ALL)
+	
+	@OneToOne//(mappedBy = "shippingAddress")//, cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
+	//@JoinColumn(name="ADDRESS_ENT_ID", referencedColumnName="USERS_ID")*/
 	private User user;
 	
 	
@@ -74,7 +75,19 @@ public class AddressEntity implements Serializable {
 		this.user = user;
 	}
 
+
 	public String getStreet() { return street; }
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public void setStreet(String street) { this.street = street; }
 
 	public String getZipcode() { return zipcode; }

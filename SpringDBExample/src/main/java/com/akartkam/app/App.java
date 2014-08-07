@@ -127,6 +127,20 @@ public class App {
 		
 		
 		User user = new User("username", "password");
+		
+	    //session.persist(user);
+		
+		//addr.setId(user.getId());
+		user.setShippingAddress(addr);
+		addr.setUser(user);
+		session.save(user);
+		session.save(addr);	
+		
+		addr = new AddressEntity("Street1", "2345678", "City1");
+		
+		user = new User("username1", "password1");
+		
+		//addr.setId(user.getId());
 		user.setShippingAddress(addr);
 		addr.setUser(user);
 		session.save(user);

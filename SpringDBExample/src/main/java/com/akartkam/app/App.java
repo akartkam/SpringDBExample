@@ -3,6 +3,7 @@ package com.akartkam.app;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.akartkam.domain.AddressEntity;
 import com.akartkam.domain.Spitter;
+import com.akartkam.domain.Spittle;
 import com.akartkam.domain.User;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -32,15 +34,17 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.akartkam.persistence.SessionFactory1;;
+import com.akartkam.persistence.SessionFactory1;
+import com.akartkam.service.SpitterService;
+import com.akartkam.service.SpitterServiceImpl;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
 
-//@Repository
+
 public class App {
 	 
 	private static final String SPITTER_XML = "./spitter-jaxb.xml";
 	
-	//@Autowired
-
 	
 	
 	/*public Session currentSession() { // Извлекает текущий
@@ -124,13 +128,8 @@ public class App {
 		Transaction tx = session.beginTransaction();
 		
 		AddressEntity addr = new AddressEntity("Street", "123456", "City");
-		
-		
 		User user = new User("username", "password");
 		
-	    //session.persist(user);
-		
-		//addr.setId(user.getId());
 		user.setShippingAddress(addr);
 		addr.setUser(user);
 		session.save(user);
@@ -140,19 +139,38 @@ public class App {
 		
 		user = new User("username1", "password1");
 		
-		//addr.setId(user.getId());
 		user.setShippingAddress(addr);
 		addr.setUser(user);
 		session.save(user);
 		session.save(addr);	
 		
-		/*User user1 = new User("username1", "password1");
-		//addr.setUser(user1);
-		user1.setShippingAddress(addr);
-		session.save(user1);*/
 		
         tx.commit();
         session.close();
+        
+        
+        SpitterServiceImpl spitterServiceImpl = appContext.getBean(SpitterServiceImpl.class);
+        HibernateTransactionManager tm = appContext.getBean(HibernateTransactionManager.class);
+        
+        TransactionTemplate txTemplate = new TransactionTemplate(tm);
+        
+        spitterServiceImpl.setTransactionTemplate(txTemplate);
+        
+        Spitter newSpitter = new Spitter();
+        newSpitter.setUsername("testuser");
+        newSpitter.setPassword("password");
+        newSpitter.setFullName("Michael McTest");
+        
+        Spittle newSpittle = new Spittle();
+        newSpittle.setSpitter(newSpitter);
+        newSpittle.setText("Some text");
+        newSpittle.setWhen(new Date());
+                
+        
+        spitterServiceImpl.saveSpitter(newSpitter);
+        spitterServiceImpl.saveSpittle(newSpittle);
+        
+        
 	
 	}
 }

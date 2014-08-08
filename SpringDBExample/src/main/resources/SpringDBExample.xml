@@ -10,6 +10,7 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	<!--"com.mchange.v2.c3p0.ComboPooledDataSource"-->   
 	<context:annotation-config />     
 	<context:component-scan base-package="com.akartkam.persistence" />
+	<context:component-scan base-package="com.akartkam.service" />
 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
 	<bean class="com.akartkam.app.App"/>

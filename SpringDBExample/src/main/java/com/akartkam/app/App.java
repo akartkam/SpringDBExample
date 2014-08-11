@@ -18,6 +18,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
 
 import com.akartkam.domain.AddressEntity;
+import com.akartkam.domain.Bid;
+import com.akartkam.domain.Item;
 import com.akartkam.domain.Spitter;
 import com.akartkam.domain.Spittle;
 import com.akartkam.domain.User;
@@ -37,6 +39,7 @@ import javax.xml.bind.Unmarshaller;
 import com.akartkam.persistence.SessionFactory1;
 import com.akartkam.service.SpitterService;
 import com.akartkam.service.SpitterServiceImpl;
+
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 
@@ -146,15 +149,28 @@ public class App {
 		
 		
         tx.commit();
+        //session.close();
+        
+        //
+        tx = session.beginTransaction();
+        Item item = new Item("Vova");
+        Bid bid1 = new Bid(item);
+        Bid bid2 = new Bid(item);
+        
+        item.addBid(bid1);
+        item.addBid(bid1);
+        
+        
+        session.save(item);
+        tx.commit();
         session.close();
         
+        SpitterService spitterServiceImpl = appContext.getBean(SpitterService.class);
+        //HibernateTransactionManager tm = appContext.getBean(HibernateTransactionManager.class);
         
-        SpitterServiceImpl spitterServiceImpl = appContext.getBean(SpitterServiceImpl.class);
-        HibernateTransactionManager tm = appContext.getBean(HibernateTransactionManager.class);
+        //TransactionTemplate txTemplate = new TransactionTemplate(tm);
         
-        TransactionTemplate txTemplate = new TransactionTemplate(tm);
-        
-        spitterServiceImpl.setTransactionTemplate(txTemplate);
+        //spitterServiceImpl.setTransactionTemplate(txTemplate);
         
         Spitter newSpitter = new Spitter();
         newSpitter.setUsername("testuser");
@@ -169,6 +185,16 @@ public class App {
         
         spitterServiceImpl.saveSpitter(newSpitter);
         spitterServiceImpl.saveSpittle(newSpittle);
+        
+        newSpittle = spitterServiceImpl.getSpittleById(4L);
+        if (newSpittle != null)
+        newSpitter = newSpittle.getSpitter();
+        
+        //Spitter otherSpitter = spitterServiceImpl.get
+        System.out.println(newSpittle);
+        System.out.println(newSpitter);
+        
+        
         
         
 	

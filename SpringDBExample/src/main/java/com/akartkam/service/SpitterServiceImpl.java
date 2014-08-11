@@ -18,14 +18,15 @@ import com.akartkam.domain.Spittle;
 import com.akartkam.persistence.SpitterDao;
 
 @Service
-@Transactional(propagation=Propagation.REQUIRED)
+@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 public class SpitterServiceImpl implements SpitterService {
   
   @Autowired
   private SpitterDao spitterDao; 
   //<start id="java_addSpittle" /> 
+  @Transactional(propagation=Propagation.REQUIRED, readOnly=false)
   public void saveSpittle(final Spittle spittle) {
-    txTemplate.execute(new TransactionCallback<Void>() {
+    /*txTemplate.execute(new TransactionCallback<Void>() {
       public Void doInTransaction(TransactionStatus txStatus) {
         try {
         spitterDao.saveSpittle(spittle);
@@ -35,11 +36,12 @@ public class SpitterServiceImpl implements SpitterService {
         }
         return null;
       }      
-    });
+    });*/
+	  spitterDao.saveSpittle(spittle);
   }
   //<end id="java_addSpittle" />
 
-  @Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
+
   public List<Spittle> getRecentSpittles(int count) {
     List<Spittle> recentSpittles = 
         spitterDao.getRecentSpittle();
@@ -50,8 +52,9 @@ public class SpitterServiceImpl implements SpitterService {
             min(49, recentSpittles.size()));
   }
   
+  @Transactional(propagation=Propagation.REQUIRED, readOnly=false)
   public void saveSpitter(final Spitter spitter) {
-    txTemplate.execute(new TransactionCallback<Void>() {
+    /*txTemplate.execute(new TransactionCallback<Void>() {
       public Void doInTransaction(TransactionStatus txStatus) {
         if(spitter.getId() == null) {
           spitterDao.addSpitter(spitter);
@@ -61,7 +64,8 @@ public class SpitterServiceImpl implements SpitterService {
 
         return null;
       }
-    });
+    });*/
+	  spitterDao.addSpitter(spitter);
   }
   
   public Spitter getSpitter(long id) {
@@ -82,14 +86,30 @@ public class SpitterServiceImpl implements SpitterService {
           Spitter spitter) {
     return spitterDao.getSpittlesForSpitter(spitter);
   }
-  
+ 
+  @Transactional(propagation=Propagation.REQUIRED, readOnly=false)
   public void deleteSpittle(long id) {
     spitterDao.deleteSpittle(id);
   }
   
-  public Spittle getSpittleById(long id) {
-    return spitterDao.getSpittleById(id);
-  }
+  public Spittle getSpittleById(final long id) {
+	  
+	/* return (Spittle) txTemplate.execute(new TransactionCallback<Spittle>() {
+	      public Spittle doInTransaction(TransactionStatus txStatus) {
+	    	  Spittle spittle;
+	        try {
+	        	 spittle = spitterDao.getSpittleById(id);
+	        } catch (RuntimeException e) {
+	          txStatus.setRollbackOnly();
+	          throw e;
+	        }
+			return spittle;
+	      }      
+	    });*/
+	   return spitterDao.getSpittleById(id);
+	  }	  
+   
+
   
   //private SpitterDao spitterDao;
   public void setSpitterDao(SpitterDao spitterDao) {

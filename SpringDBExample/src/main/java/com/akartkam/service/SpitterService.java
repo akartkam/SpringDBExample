@@ -17,7 +17,7 @@ public interface SpitterService {
   List<Spittle> getSpittlesForSpitter(String username);
   Spitter getSpitter(String username);
   
-  Spittle getSpittleById(long id);
+  Spittle getSpittleById(final long id);
   void deleteSpittle(long id);
   
   List<Spitter> getAllSpitters();

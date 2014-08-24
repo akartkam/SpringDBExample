@@ -6,14 +6,18 @@ import java.util.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+//import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
-
+import javax.persistence.JoinColumn;
 /**
  * An item for auction.
  *
@@ -36,9 +40,34 @@ public class Item implements Serializable, Comparable {
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
     private List<Bid> bids = new ArrayList<Bid>();
 
+    @ManyToOne
+    @JoinTable(
+    		name = "ITEM_BUYER",
+    		joinColumns = {@JoinColumn(name = "ITEM_ID")},
+    		inverseJoinColumns = {@JoinColumn(name = "USER_ID")}
+    )
+    private User buyer;
 
+    @ManyToMany(mappedBy = "items")
+    private Set<Category> categories = new HashSet<Category>();
+    
+    public Set<Category> getCategories() {
+		return categories;
+	}
 
-    /**
+	public User getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(User buyer) {
+		this.buyer = buyer;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
      * No-arg constructor for JavaBean tools.
      */
     public Item() {}

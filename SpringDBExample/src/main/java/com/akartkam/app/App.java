@@ -3,6 +3,7 @@ package com.akartkam.app;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.akartkam.domain.AddressEntity;
 import com.akartkam.domain.Bid;
+import com.akartkam.domain.Category;
 import com.akartkam.domain.Item;
 import com.akartkam.domain.Spitter;
 import com.akartkam.domain.Spittle;
@@ -194,9 +196,38 @@ public class App {
         System.out.println(newSpittle);
         System.out.println(newSpitter);
         
-        
-        
-        
+        session = appContext.getBean(SessionFactory1.class).currentSession();
+		tx = session.beginTransaction();
+		
+		Category category = new Category("Category");
+		Category category1 = new Category("Category1");
+		Category category2 = new Category("Category2");
+		
+		item = new Item("Item");
+		Item item1 = new Item("Item1");
+		Item item2 = new Item("Item2");
+		Item item3 = new Item("Item3");
+
+		/*category.addItem(item);
+		category.addItem(item1);
+		category1.addItem(item2);
+		category2.addItem(item3);
+		*/
+		category.setItems(Arrays.asList(item, item1));
+		category1.setItems(Arrays.asList(item2));
+		category2.setItems(Arrays.asList(item3));
+		
+		session.save(item);
+		session.save(item1);
+		session.save(item2);
+		session.save(item3);
+		session.save(category);
+		session.save(category1);
+		session.save(category2);
+		
+		
+        tx.commit();
+        session.close();
 	
 	}
 }

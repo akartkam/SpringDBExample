@@ -2,7 +2,9 @@ package com.akartkam.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,8 +53,19 @@ public class User implements Serializable {
     //@JoinColumn(name="ADDRESS_ENT_ID")//, unique=true, updatable=false)
     @PrimaryKeyJoinColumn
     private AddressEntity shippingAddress;
+    
+    @OneToMany(mappedBy = "buyer")
+    private Set<Item> boughtItems = new HashSet<Item>();
 
-    public AddressEntity getShippingAddress() {
+    public Set<Item> getBoughtItems() {
+		return boughtItems;
+	}
+
+	public void setBoughtItems(Set<Item> boughtItems) {
+		this.boughtItems = boughtItems;
+	}
+
+	public AddressEntity getShippingAddress() {
 		return shippingAddress;
 	}
 

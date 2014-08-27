@@ -225,6 +225,9 @@ public class App {
 		session.save(category1);
 		session.save(category2);
 		
+		System.out.println(category.getItems());
+		System.out.println(item1.getCategories());
+		
 		
         tx.commit();
         session.close();

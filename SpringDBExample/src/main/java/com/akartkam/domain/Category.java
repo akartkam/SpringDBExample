@@ -92,7 +92,9 @@ public class Category implements Serializable, Comparable {
     private List<Item> items = new ArrayList<Item>();
 
     public void setItems(List<Item> items) {
-		this.items = items;
+		for (Item item:items ) { 
+			addItem(item);
+		}
 	}
     
    
@@ -193,7 +195,7 @@ public class Category implements Serializable, Comparable {
 
     // Regular many-to-many
     public List<Item> getItems() { return items; }
-   /* public void addItem(Item item) {
+    public void addItem(Item item) {
         if (item == null) throw new IllegalArgumentException("Null item!");
         items.add(item);
         item.getCategories().add(this);
@@ -203,7 +205,7 @@ public class Category implements Serializable, Comparable {
         items.remove(item);
         item.getCategories().remove(this);
     }
-*/
+
     // Many-to-many with additional columns on join table, intermediate entity class
     // To create a link, instantiate a CategorizedItem with the right constructor
     // To remove a link, use getCategorizedItems().remove()
@@ -247,11 +249,12 @@ public class Category implements Serializable, Comparable {
         }
         return 0;
     }
-
+/*
     public String toString() {
         return  "(" + getId() + ") Name: '" + getName();
     }
 
+*/
     // ********************** Business Methods ********************** //
 
 }

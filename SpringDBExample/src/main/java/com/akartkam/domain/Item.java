@@ -48,13 +48,13 @@ public class Item implements Serializable, Comparable {
     )
     private User buyer;
 
-    /*@ManyToMany(mappedBy = "items")
-    private Set<Category> categories = new HashSet<Category>();
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<Category>();
     
-    public Set<Category> getCategories() {
+    public List<Category> getCategories() {
 		return categories; //Collections.unmodifiableSet(categories);
 	}
-    */
+    
 	public User getBuyer() {
 		return buyer;
 	}
@@ -167,12 +167,12 @@ public class Item implements Serializable, Comparable {
         result = 29 * result;
         return result;
     }
-
+/*
     public String toString() {
         return  "Item ('" + getId() + "'), " +
                 "Name: '" + getName() + "' ";
     }
-
+*/
     public int compareTo(Object o) {
         if (o instanceof Item) {
             // Don't compare Date objects! Use the time in milliseconds!

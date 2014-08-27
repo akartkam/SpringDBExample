@@ -51,6 +51,10 @@ public class Item implements Serializable, Comparable {
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<Category>();
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    @org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    private Set<CategorizedItem> categorizedItems = new HashSet<CategorizedItem>();
+    
     public List<Category> getCategories() {
 		return categories; //Collections.unmodifiableSet(categories);
 	}

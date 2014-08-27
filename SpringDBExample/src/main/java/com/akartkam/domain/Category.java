@@ -99,12 +99,13 @@ public class Category implements Serializable, Comparable {
     
    
 
-	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     @org.hibernate.annotations.Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
     private Set<CategorizedItem> categorizedItems = new HashSet<CategorizedItem>();
 
-    @org.hibernate.annotations.CollectionOfElements
+	/*
+	@org.hibernate.annotations.CollectionOfElements
     @JoinTable(
         name = "CATEGORIZED_ITEM_COMPONENTS",
         joinColumns = @JoinColumn(name = "CATEGORY_ID")
@@ -209,7 +210,7 @@ public class Category implements Serializable, Comparable {
     // Many-to-many with additional columns on join table, intermediate entity class
     // To create a link, instantiate a CategorizedItem with the right constructor
     // To remove a link, use getCategorizedItems().remove()
-   // public Set<CategorizedItem> getCategorizedItems() { return categorizedItems; }
+    public Set<CategorizedItem> getCategorizedItems() { return categorizedItems; }
 
     // Many-to-many with additional columns on join table, intermediate component class
     //public Set<CategorizedItemComponent> getCategorizedItemComponents() { return categorizedItemComponents; }

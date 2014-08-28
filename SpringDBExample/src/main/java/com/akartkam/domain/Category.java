@@ -99,9 +99,10 @@ public class Category implements Serializable, Comparable {
     
    
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    @org.hibernate.annotations.Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-    @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+	@OneToMany(orphanRemoval=true,cascade = CascadeType.ALL, mappedBy = "category")
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, 
+										org.hibernate.annotations.CascadeType.DELETE}) 
+	@org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
     private Set<CategorizedItem> categorizedItems = new HashSet<CategorizedItem>();
 
 	/*

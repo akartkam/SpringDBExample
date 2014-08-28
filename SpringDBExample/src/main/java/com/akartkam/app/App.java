@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.akartkam.domain.AddressEntity;
 import com.akartkam.domain.Bid;
+import com.akartkam.domain.CategorizedItem;
 import com.akartkam.domain.Category;
 import com.akartkam.domain.Item;
 import com.akartkam.domain.Spitter;
@@ -212,21 +213,38 @@ public class App {
 		category.addItem(item1);
 		category1.addItem(item2);
 		category2.addItem(item3);
-		*/
+		
 		category.setItems(Arrays.asList(item, item1));
 		category1.setItems(Arrays.asList(item2));
 		category2.setItems(Arrays.asList(item3));
+		*/
 		
+
+	
+		
+		CategorizedItem ci = new CategorizedItem("user1", category, item);
+		CategorizedItem ci1 = new CategorizedItem("user1", category, item1);
+		CategorizedItem ci2 = new CategorizedItem("user1", category1, item2);
+		CategorizedItem ci3 = new CategorizedItem("user1", category2, item3);
+		
+
 		session.save(item);
 		session.save(item1);
 		session.save(item2);
 		session.save(item3);
 		session.save(category);
 		session.save(category1);
-		session.save(category2);
+		session.save(category2);		
 		
-		System.out.println(category.getItems());
-		System.out.println(item1.getCategories());
+		/*
+		session.save(ci);
+		session.save(ci1);
+		session.save(ci2);
+		session.save(ci3);
+		*/
+		
+		//System.out.println(category.getItems());
+		//System.out.println(item1.getCategories());
 		
 		
         tx.commit();

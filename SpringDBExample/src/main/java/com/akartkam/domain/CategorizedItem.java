@@ -51,6 +51,8 @@ public class CategorizedItem implements Serializable, Comparable {
 		public boolean equals(Object o) {
 			if (o instanceof Id) {
 				Id that = (Id)o;
+				if (categoryId == null) return false;
+				if (itemId == null) return false;
 				return this.categoryId.equals(that.categoryId) &&
 					   this.itemId.equals(that.itemId);
 			} else {
@@ -59,7 +61,8 @@ public class CategorizedItem implements Serializable, Comparable {
 		}
 
 		public int hashCode() {
-			return categoryId.hashCode() + itemId.hashCode();
+			
+			return (categoryId == null?0:categoryId.hashCode()) + (itemId == null?0:itemId.hashCode());
 		}
 	}
 

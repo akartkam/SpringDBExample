@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
+
 /**
  * An item for auction.
  *
@@ -51,11 +52,19 @@ public class Item implements Serializable, Comparable {
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<Category>();
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-    @org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @OneToMany(orphanRemoval=true, cascade = javax.persistence.CascadeType.ALL, mappedBy = "item")
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})    
     private Set<CategorizedItem> categorizedItems = new HashSet<CategorizedItem>();
     
-    public List<Category> getCategories() {
+    public Set<CategorizedItem> getCategorizedItems() {
+		return categorizedItems;
+	}
+
+	public void setCategorizedItems(Set<CategorizedItem> categorizedItems) {
+		this.categorizedItems = categorizedItems;
+	}
+
+	public List<Category> getCategories() {
 		return categories; //Collections.unmodifiableSet(categories);
 	}
     

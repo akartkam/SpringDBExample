@@ -21,6 +21,7 @@ import org.springframework.context.ApplicationContext;
 import com.akartkam.domain.AddressEntity;
 import com.akartkam.domain.Bid;
 import com.akartkam.domain.CategorizedItem;
+import com.akartkam.domain.CategorizedItemComponent;
 import com.akartkam.domain.Category;
 import com.akartkam.domain.Item;
 import com.akartkam.domain.Spitter;
@@ -133,6 +134,7 @@ public class App {
 		Session session = appContext.getBean(SessionFactory1.class).currentSession();
 		Transaction tx = session.beginTransaction();
 		
+		/*
 		AddressEntity addr = new AddressEntity("Street", "123456", "City");
 		User user = new User("username", "password");
 		
@@ -152,10 +154,10 @@ public class App {
 		
 		
         tx.commit();
-        //session.close();
+        //session.close();*/
         
         //
-        tx = session.beginTransaction();
+        //tx = session.beginTransaction();
         Item item = new Item("Vova");
         Bid bid1 = new Bid(item);
         Bid bid2 = new Bid(item);
@@ -219,15 +221,16 @@ public class App {
 		category2.setItems(Arrays.asList(item3));
 		*/
 		
-
-	
+		CategorizedItemComponent cic = new CategorizedItemComponent("user2", category, item);
+		CategorizedItemComponent cic1 = new CategorizedItemComponent("user2", category, item1);	
+		CategorizedItemComponent cic2 = new CategorizedItemComponent("user2", category1, item2);
+		CategorizedItemComponent cic3 = new CategorizedItemComponent("user2", category2, item3);
 		
-		CategorizedItem ci = new CategorizedItem("user1", category, item);
-		CategorizedItem ci1 = new CategorizedItem("user1", category, item1);
-		CategorizedItem ci2 = new CategorizedItem("user1", category1, item2);
-		CategorizedItem ci3 = new CategorizedItem("user1", category2, item3);
+		category.getCategorizedItemComponents().add(cic);
+		category.getCategorizedItemComponents().add(cic1);
+		category1.getCategorizedItemComponents().add(cic2);
+		category2.getCategorizedItemComponents().add(cic3);
 		
-
 		session.save(item);
 		session.save(item1);
 		session.save(item2);
@@ -235,6 +238,15 @@ public class App {
 		session.save(category);
 		session.save(category1);
 		session.save(category2);		
+		
+		/*
+		CategorizedItem ci = new CategorizedItem("user1", category, item);
+		CategorizedItem ci1 = new CategorizedItem("user1", category, item1);
+		CategorizedItem ci2 = new CategorizedItem("user1", category1, item2);
+		CategorizedItem ci3 = new CategorizedItem("user1", category2, item3);
+		*/
+
+		
 		
 		/*
 		session.save(ci);

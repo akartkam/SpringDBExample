@@ -90,8 +90,25 @@ public class Category implements Serializable, Comparable {
     )
     */
     private List<Item> items = new ArrayList<Item>();
+    
+    @ElementCollection
+    @JoinTable(
+        name = "CATEGORIZED_ITEM_COMPONENTS",
+        joinColumns = @JoinColumn(name = "CATEGORY_ID")
+    )
+    @org.hibernate.annotations.ForeignKey(name = "FK_CATEGORIZED_ITEM_COMPONENT_CATEGORY_ID")
+    private Set<CategorizedItemComponent> categorizedItemComponents = new HashSet<CategorizedItemComponent>();   
 
-    public void setItems(List<Item> items) {
+    public Set<CategorizedItemComponent> getCategorizedItemComponents() {
+		return categorizedItemComponents;
+	}
+
+	public void setCategorizedItemComponents(
+			Set<CategorizedItemComponent> categorizedItemComponents) {
+		this.categorizedItemComponents = categorizedItemComponents;
+	}
+
+	public void setItems(List<Item> items) {
 		for (Item item:items ) { 
 			addItem(item);
 		}

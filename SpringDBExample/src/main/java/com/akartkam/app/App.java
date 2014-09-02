@@ -210,7 +210,29 @@ public class App {
 		Item item1 = new Item("Item1");
 		Item item2 = new Item("Item2");
 		Item item3 = new Item("Item3");
+		
+		User user = new User("User22", "password22");
+		User user1 = new User("User221", "password221");
+		User user2 = new User("User222", "password222");
 
+		session.save(item);
+		session.save(item1);
+		session.save(item2);
+		session.save(item3);
+		session.save(category);
+		session.save(category1);
+		session.save(category2);
+		session.save(user);
+		session.save(user1);
+		session.save(user2);
+		
+		category.getItemsAndUser().put(item, user);
+		category.getItemsAndUser().put(item, user1);
+		category1.getItemsAndUser().put(item2, user2);
+		//category2.getItemsAndUser().put(item3, user);
+		
+		
+		
 		/*category.addItem(item);
 		category.addItem(item1);
 		category1.addItem(item2);
@@ -221,7 +243,7 @@ public class App {
 		category2.setItems(Arrays.asList(item3));
 		*/
 		
-		CategorizedItemComponent cic = new CategorizedItemComponent("user2", category, item);
+		/*****CategorizedItemComponent cic = new CategorizedItemComponent("user2", category, item);
 		CategorizedItemComponent cic1 = new CategorizedItemComponent("user2", category, item1);	
 		CategorizedItemComponent cic2 = new CategorizedItemComponent("user2", category1, item2);
 		CategorizedItemComponent cic3 = new CategorizedItemComponent("user2", category2, item3);
@@ -229,15 +251,9 @@ public class App {
 		category.getCategorizedItemComponents().add(cic);
 		category.getCategorizedItemComponents().add(cic1);
 		category1.getCategorizedItemComponents().add(cic2);
-		category2.getCategorizedItemComponents().add(cic3);
+		category2.getCategorizedItemComponents().add(cic3);*****/
 		
-		session.save(item);
-		session.save(item1);
-		session.save(item2);
-		session.save(item3);
-		session.save(category);
-		session.save(category1);
-		session.save(category2);		
+		
 		
 		/*
 		CategorizedItem ci = new CategorizedItem("user1", category, item);

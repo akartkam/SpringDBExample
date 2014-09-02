@@ -97,9 +97,21 @@ public class Category implements Serializable, Comparable {
         joinColumns = @JoinColumn(name = "CATEGORY_ID")
     )
     @org.hibernate.annotations.ForeignKey(name = "FK_CATEGORIZED_ITEM_COMPONENT_CATEGORY_ID")
-    private Set<CategorizedItemComponent> categorizedItemComponents = new HashSet<CategorizedItemComponent>();   
+    private Set<CategorizedItemComponent> categorizedItemComponents = new HashSet<CategorizedItemComponent>();
+    
+    @ManyToMany
+    @MapKeyJoinColumn(name="ITEM_ID")
+    @JoinTable(name = "CATEGORY_ITEM_USER",
+    		   joinColumns = @JoinColumn(name = "CATEGORY_ID"),
+    		   inverseJoinColumns = @JoinColumn(name = "USER_ID")
+    )
+    private Map<Item,User> itemsAndUser = new HashMap<Item,User>(); 
 
-    public Set<CategorizedItemComponent> getCategorizedItemComponents() {
+    public Map<Item, User> getItemsAndUser() {
+		return itemsAndUser;
+	}
+
+	public Set<CategorizedItemComponent> getCategorizedItemComponents() {
 		return categorizedItemComponents;
 	}
 

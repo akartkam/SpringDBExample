@@ -100,7 +100,7 @@ public class Category implements Serializable, Comparable {
     private Set<CategorizedItemComponent> categorizedItemComponents = new HashSet<CategorizedItemComponent>();
     
     @ManyToMany
-    @MapKeyJoinColumn(name="ITEM_ID")
+    @MapKeyJoinColumn(name="ITEM_ID", updatable = false, insertable = false)
     @JoinTable(name = "CATEGORY_ITEM_USER",
     		   joinColumns = @JoinColumn(name = "CATEGORY_ID"),
     		   inverseJoinColumns = @JoinColumn(name = "USER_ID")

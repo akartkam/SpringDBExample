@@ -171,6 +171,24 @@ public class App {
         tx.commit();
         session.close();
         
+        
+        session = appContext.getBean(SessionFactory1.class).currentSession();
+		tx = session.beginTransaction();
+		item = (Item) session.get(Item.class, 1L);
+		Item item11  = (Item) session.get(Item.class, 1L);
+		System.out.println("**********************************"+(item==item11)+"**********************************");
+        tx.commit();
+        session.close();
+        
+
+        session = appContext.getBean(SessionFactory1.class).currentSession();
+		tx = session.beginTransaction();
+		Item item22  = (Item) session.get(Item.class, 1L);
+		System.out.println("##############################################"+(item==item22)+"#####################################################");
+        tx.commit();
+        session.close();
+        
+        
         SpitterService spitterServiceImpl = appContext.getBean(SpitterService.class);
         //HibernateTransactionManager tm = appContext.getBean(HibernateTransactionManager.class);
         
@@ -199,6 +217,9 @@ public class App {
         //Spitter otherSpitter = spitterServiceImpl.get
         System.out.println(newSpittle);
         System.out.println(newSpitter);
+        
+        
+        
         
         session = appContext.getBean(SessionFactory1.class).currentSession();
 		tx = session.beginTransaction();

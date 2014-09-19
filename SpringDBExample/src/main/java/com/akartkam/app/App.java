@@ -210,9 +210,9 @@ public class App {
         spitterServiceImpl.saveSpitter(newSpitter);
         spitterServiceImpl.saveSpittle(newSpittle);
         
-        newSpittle = spitterServiceImpl.getSpittleById(4L);
-        if (newSpittle != null)
-        newSpitter = newSpittle.getSpitter();
+        //newSpittle = spitterServiceImpl.getSpittleById(4L);
+        //if (newSpittle != null)
+        //newSpitter = newSpittle.getSpitter();
         
         //Spitter otherSpitter = spitterServiceImpl.get
         System.out.println(newSpittle);

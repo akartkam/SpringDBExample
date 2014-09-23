@@ -12,6 +12,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -161,41 +163,45 @@ public class App {
         //tx = session.beginTransaction();
         Item item = new Item("Vova");
         Bid bid1 = new Bid(item);
-        Bid bid2 = new Bid(item);
         
         item.addBid(bid1);
-        item.addBid(bid1);
-        
-        
+      
         session.save(item);
         tx.commit();
         session.close();
         
         
-        session = appContext.getBean(SessionFactory1.class).currentSession();
+        item.setName("Vitya");
+        
+		session = appContext.getBean(SessionFactory1.class).currentSession();
+		tx = session.beginTransaction();
+
+		Item item111 = (Item) session.get(Item.class, 1L);
+		
+		//session.buildLockRequest(LockOptions.NONE).lock(item);
+		//session.update(item);
+		Item item3 = (Item) session.merge(item111);
+		System.out.println((item==item3));
+		System.out.println((item==item111));
+		System.out.println((item111==item3));
+		
+		item111.setName("Vitya1");
+		       
+        tx.commit();
+        session.close();
+
+        
+        /*session = appContext.getBean(SessionFactory1.class).currentSession();
 		tx = session.beginTransaction();
 		item = (Item) session.get(Item.class, 1L);
 		Item item11  = (Item) session.get(Item.class, 1L);
-		System.out.println("**********************************"+(item==item11)+"**********************************");
+		//System.out.println("**********************************"+(item==item11)+"**********************************");
         tx.commit();
-        session.close();
-        
-
-        session = appContext.getBean(SessionFactory1.class).currentSession();
-		tx = session.beginTransaction();
-		Item item22  = (Item) session.get(Item.class, 1L);
-		System.out.println("##############################################"+(item==item22)+"#####################################################");
-        tx.commit();
-        session.close();
+        session.close();*/
         
         
-        SpitterService spitterServiceImpl = appContext.getBean(SpitterService.class);
-        //HibernateTransactionManager tm = appContext.getBean(HibernateTransactionManager.class);
-        
-        //TransactionTemplate txTemplate = new TransactionTemplate(tm);
-        
-        //spitterServiceImpl.setTransactionTemplate(txTemplate);
-        
+/*        SpitterService spitterServiceImpl = appContext.getBean(SpitterService.class);
+       
         Spitter newSpitter = new Spitter();
         newSpitter.setUsername("testuser");
         newSpitter.setPassword("password");
@@ -217,88 +223,7 @@ public class App {
         //Spitter otherSpitter = spitterServiceImpl.get
         System.out.println(newSpittle);
         System.out.println(newSpitter);
-        
-        
-        
-        
-        session = appContext.getBean(SessionFactory1.class).currentSession();
-		tx = session.beginTransaction();
-		
-		Category category = new Category("Category");
-		Category category1 = new Category("Category1");
-		Category category2 = new Category("Category2");
-		
-		item = new Item("Item");
-		Item item1 = new Item("Item1");
-		Item item2 = new Item("Item2");
-		Item item3 = new Item("Item3");
-		
-		User user = new User("User22", "password22");
-		User user1 = new User("User221", "password221");
-		User user2 = new User("User222", "password222");
-
-		session.save(item);
-		session.save(item1);
-		session.save(item2);
-		session.save(item3);
-		session.save(category);
-		session.save(category1);
-		session.save(category2);
-		session.save(user);
-		session.save(user1);
-		session.save(user2);
-		
-		category.getItemsAndUser().put(item, user);
-		category.getItemsAndUser().put(item, user1);
-		category1.getItemsAndUser().put(item2, user2);
-		//category2.getItemsAndUser().put(item3, user);
-		
-		
-		
-		/*category.addItem(item);
-		category.addItem(item1);
-		category1.addItem(item2);
-		category2.addItem(item3);
-		
-		category.setItems(Arrays.asList(item, item1));
-		category1.setItems(Arrays.asList(item2));
-		category2.setItems(Arrays.asList(item3));
-		*/
-		
-		/*****CategorizedItemComponent cic = new CategorizedItemComponent("user2", category, item);
-		CategorizedItemComponent cic1 = new CategorizedItemComponent("user2", category, item1);	
-		CategorizedItemComponent cic2 = new CategorizedItemComponent("user2", category1, item2);
-		CategorizedItemComponent cic3 = new CategorizedItemComponent("user2", category2, item3);
-		
-		category.getCategorizedItemComponents().add(cic);
-		category.getCategorizedItemComponents().add(cic1);
-		category1.getCategorizedItemComponents().add(cic2);
-		category2.getCategorizedItemComponents().add(cic3);*****/
-		
-		
-		
-		/*
-		CategorizedItem ci = new CategorizedItem("user1", category, item);
-		CategorizedItem ci1 = new CategorizedItem("user1", category, item1);
-		CategorizedItem ci2 = new CategorizedItem("user1", category1, item2);
-		CategorizedItem ci3 = new CategorizedItem("user1", category2, item3);
-		*/
-
-		
-		
-		/*
-		session.save(ci);
-		session.save(ci1);
-		session.save(ci2);
-		session.save(ci3);
-		*/
-		
-		//System.out.println(category.getItems());
-		//System.out.println(item1.getCategories());
-		
-		
-        tx.commit();
-        session.close();
+ */       
 	
 	}
 }

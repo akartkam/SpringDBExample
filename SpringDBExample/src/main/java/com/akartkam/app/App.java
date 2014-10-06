@@ -167,6 +167,9 @@ public class App {
         item.addBid(bid1);
       
         session.save(item);
+        
+      
+        
         tx.commit();
         session.close();
         
@@ -185,7 +188,9 @@ public class App {
 		System.out.println((item==item111));
 		System.out.println((item111==item3));
 		
-		item111.setName("Vitya1");
+		item111.setName("Vitya3");
+		
+        System.in.read();
 		       
         tx.commit();
         session.close();

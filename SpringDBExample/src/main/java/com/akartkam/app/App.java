@@ -1,54 +1,22 @@
 
 package com.akartkam.app;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.Arrays;
-import java.util.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-import javax.sql.DataSource;
+import javax.xml.bind.JAXBException;
 
 import org.hibernate.LockMode;
 import org.hibernate.LockOptions;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.akartkam.domain.AddressEntity;
 import com.akartkam.domain.Bid;
-import com.akartkam.domain.CategorizedItem;
-import com.akartkam.domain.CategorizedItemComponent;
-import com.akartkam.domain.Category;
 import com.akartkam.domain.Item;
-import com.akartkam.domain.Spitter;
-import com.akartkam.domain.Spittle;
-import com.akartkam.domain.User;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-
-import org.springframework.jdbc.core.RowMapper;
-//import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
 import com.akartkam.persistence.SessionFactory1;
-import com.akartkam.service.SpitterService;
-import com.akartkam.service.SpitterServiceImpl;
-
-import org.springframework.transaction.support.TransactionTemplate;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+//import org.springframework.jdbc.core.JdbcTemplate;
 
 
 public class App {
@@ -161,35 +129,28 @@ public class App {
         
         //
         //tx = session.beginTransaction();
-        Item item = new Item("Vova");
-        Bid bid1 = new Bid(item);
-        
+        Item item = (Item) session.get(Item.class, 59L);
+        /*Bid bid1 = new Bid(item);
         item.addBid(bid1);
+        List<Bid> lb = item.getBids();*/     
+        //item.addBid(bid1);
       
-        session.save(item);
-        
-      
-        
+        //session.save(item);
+        //session.flush();
         tx.commit();
         session.close();
         
         
-        item.setName("Vitya");
-        
+        /*item.setName("Vitya");
+
+        bid1 = new Bid();
+        item.addBid(bid1);
+        */
 		session = appContext.getBean(SessionFactory1.class).currentSession();
 		tx = session.beginTransaction();
 
-		Item item111 = (Item) session.get(Item.class, 1L);
-		
-		//session.buildLockRequest(LockOptions.NONE).lock(item);
-		//session.update(item);
-		Item item3 = (Item) session.merge(item111);
-		System.out.println((item==item3));
-		System.out.println((item==item111));
-		System.out.println((item111==item3));
-		
-		item111.setName("Vitya3");
-		
+		session.buildLockRequest(LockOptions.READ).lock(item);
+	
         System.in.read();
 		       
         tx.commit();
